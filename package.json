@@ -5,18 +5,30 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "sync-repos": "node scripts/fetch-repos.mjs",
+    "build": "node scripts/fetch-repos.mjs && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.23",
+    "nodemailer": "^8.0.7",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@netlify/functions": "^5.2.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/nodemailer": "^8.0.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@types/three": "^0.184.0",
     "@vitejs/plugin-react": "^4.4.1",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.0",

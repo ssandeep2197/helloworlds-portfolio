@@ -1,3 +1,89 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-void: hsl(225, 30%, 4%);
+  --color-deep: hsl(225, 25%, 7%);
+  --color-shade: hsl(225, 20%, 11%);
+  --color-edge: hsl(225, 15%, 18%);
+  --color-mute: hsl(225, 10%, 55%);
+  --color-bone: hsl(225, 15%, 88%);
+  --color-pure: hsl(0, 0%, 100%);
+  --color-glow: hsl(195, 100%, 65%);
+  --color-glow-soft: hsla(195, 100%, 65%, 0.6);
+  --color-ember: hsl(15, 100%, 65%);
+
+  --font-display: "Space Grotesk", "Poppins", sans-serif;
+  --font-body: "Inter", "Poppins", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    @apply bg-void text-bone;
+    scroll-behavior: auto;
+  }
+  body {
+    @apply bg-void text-bone font-body antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  ::selection {
+    background: var(--color-glow);
+    color: var(--color-void);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: hsla(225, 25%, 7%, 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid hsla(225, 15%, 30%, 0.4);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 24px hsla(195, 100%, 65%, 0.5);
+  }
+
+  .grid-lines {
+    background-image:
+      linear-gradient(hsla(195, 100%, 65%, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(195, 100%, 65%, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      hsla(0, 0%, 0%, 0.04) 2px,
+      hsla(0, 0%, 0%, 0.04) 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
