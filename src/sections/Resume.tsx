@@ -98,25 +98,27 @@ const Resume = () => {
                 </li>
               ))}
             </ol>
-
-            <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-glow mt-6 mb-6">Skills</h3>
-            <ul className="space-y-4">
-              {skills.map((s) => (
-                <li key={s.name}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm">{s.name}</span>
-                    <span className="font-mono text-xs text-mute">{s.value}%</span>
-                  </div>
-                  <div className="h-px bg-edge relative overflow-hidden">
-                    <div
-                      className="absolute inset-y-0 left-0 bg-glow"
-                      style={{ width: `${s.value}%`, height: '2px', top: '-1px' }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
+        </div>
+
+        <div className="mt-20">
+          <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-glow mb-8">Skills</h3>
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-5">
+            {skills.map((s) => (
+              <li key={s.name}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm">{s.name}</span>
+                  <span className="font-mono text-xs text-mute">{s.value}%</span>
+                </div>
+                <div className="h-px bg-edge relative overflow-hidden">
+                  <div
+                    className="absolute inset-y-0 left-0 bg-glow"
+                    style={{ width: `${s.value}%`, height: '2px', top: '-1px' }}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
