@@ -6,8 +6,24 @@ const services = [
     body: 'End-to-end product engineering across React, Node, and SQL/NoSQL databases — built to scale.',
   },
   {
+    title: 'System Architecture',
+    body: 'Schemas, service boundaries, and the unglamorous decisions that decide whether a product survives growth.',
+  },
+  {
     title: 'Realtime Systems',
     body: 'WebSockets, queues, caching, and event-driven backends that stay responsive under load.',
+  },
+  {
+    title: 'API Design',
+    body: 'Clean, versioned contracts that are a pleasure to integrate against — REST or GraphQL.',
+  },
+  {
+    title: 'Database Engineering',
+    body: 'Schema modeling, query tuning, and migrations across SQL and NoSQL — without taking the system down.',
+  },
+  {
+    title: 'DevOps & Delivery',
+    body: 'Pipelines, deploys, and observability — getting code from branch to production safely and predictably.',
   },
   {
     title: 'Web Experiences',
