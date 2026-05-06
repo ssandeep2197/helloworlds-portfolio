@@ -27,19 +27,19 @@ const About = () => {
       <div ref={ref} className="reveal max-w-6xl mx-auto">
         <p className="font-mono text-xs uppercase tracking-[0.4em] text-mute mb-4">01 — About</p>
         <h2 className="text-4xl md:text-6xl font-semibold mb-12 max-w-3xl leading-tight">
-          I turn complex problems into <span className="text-[color:var(--color-glow)]">simple</span>,
-          intuitive products.
+          Architecture you can <span className="text-[color:var(--color-glow)]">defend</span>,
+          shipped end-to-end.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-mute leading-relaxed text-base md:text-lg max-w-4xl mb-20">
           <p>
-            Full Stack Developer from UP, India, currently leading backend and system design
-            for mobile and web platforms. I work across the stack — from system design to the
-            last pixel.
+            I'm a Senior Full Stack Engineer with six years building production software
+            end-to-end. I currently lead backend and system design for realtime mobile
+            and web platforms.
           </p>
           <p>
-            My focus is products that are functional, fast, and worth coming back to.
-            I bring the same care to architecture as I do to motion and interaction.
+            What I care about: systems that scale without ceremony, code that's still
+            maintainable a year later, and shipping things real users can rely on.
           </p>
         </div>
 
