@@ -51,12 +51,6 @@ const Contact = () => {
               </a>
             </div>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-mute mb-2">Phone</p>
-              <a href="tel:+918383066548" className="text-lg hover:text-glow transition-colors">
-                +91 8383 066 548
-              </a>
-            </div>
-            <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-mute mb-2">Based in</p>
               <p className="text-lg">Ghaziabad, UP, India</p>
             </div>
