@@ -41,10 +41,13 @@ const education = [
 
 const skills = [
   { name: 'Data Structures', value: 90 },
-  { name: 'React JS', value: 80 },
-  { name: 'Node.js', value: 80 },
+  { name: 'JavaScript', value: 85 },
   { name: 'TypeScript', value: 80 },
-  { name: 'JavaScript', value: 70 },
+  { name: 'Java', value: 80 },
+  { name: 'React JS', value: 85 },
+  { name: 'Node.js / Express', value: 85 },
+  { name: 'Spring Boot', value: 75 },
+  { name: 'SQL / NoSQL', value: 80 },
   { name: 'HTML / CSS', value: 90 },
 ];
 
