@@ -83,7 +83,7 @@ const Contact = () => {
               <div className="flex gap-3">
                 {[
                   { href: 'https://www.linkedin.com/in/sandeep2197/', label: 'LinkedIn' },
-                  { href: 'https://github.com/sandeepitgcet/', label: 'GitHub' },
+                  { href: 'https://github.com/ssandeep2197', label: 'GitHub' },
                   { href: 'https://twitter.com/sandeep_s_007', label: 'Twitter' },
                 ].map((s) => (
                   <a
