@@ -9,42 +9,24 @@ const Contact = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.current) return;
     setIsSubmitting(true);
 
-    try {
-      const fd = new FormData(form.current);
-      const payload = {
-        name: String(fd.get('name') || ''),
-        email: String(fd.get('email') || ''),
-        message: String(fd.get('message') || ''),
-        honey: String(fd.get('honey') || ''),
-      };
+    const fd = new FormData(form.current);
+    const name = String(fd.get('name') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const message = String(fd.get('message') || '').trim();
 
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+    const body = encodeURIComponent(`From: ${name} <${email}>\n\n${message}`);
+    window.location.href = `mailto:s.sandeep2197@gmail.com?subject=${subject}&body=${body}`;
 
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || `Request failed (${response.status}).`);
-      }
-
-      setPopupMessage('Message sent. Talk soon.');
-      form.current.reset();
-    } catch (error) {
-      console.error('Contact form error:', error);
-      const detail = error instanceof Error ? error.message : 'Please try again.';
-      setPopupMessage(`Failed to send. ${detail}`);
-    } finally {
-      setIsSubmitting(false);
-      setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 3500);
-    }
+    setPopupMessage('Opening your email app…');
+    setShowPopup(true);
+    setIsSubmitting(false);
+    setTimeout(() => setShowPopup(false), 3500);
   };
 
   return (
