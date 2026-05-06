@@ -47,7 +47,11 @@ const skills = [
   { name: 'React JS', value: 85 },
   { name: 'Node.js / Express', value: 85 },
   { name: 'Spring Boot', value: 75 },
+  { name: 'WebSockets', value: 80 },
   { name: 'SQL / NoSQL', value: 80 },
+  { name: 'Docker', value: 70 },
+  { name: 'AWS / GCP', value: 70 },
+  { name: 'Git', value: 90 },
   { name: 'HTML / CSS', value: 90 },
 ];
 
