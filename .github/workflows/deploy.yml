@@ -1,24 +1,23 @@
-name: Deploy to GitHub Pages
+name: Deploy to VPS
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: vps-deploy
   cancel-in-progress: false
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  HOST: 193.203.162.32
+  REMOTE_USER: root
+  IMAGE_NAME: helloworlds-portfolio
+  NAMESPACE: portfolio
+  DEPLOYMENT: portfolio-web
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,24 +38,39 @@ jobs:
           # Lifts the GitHub API rate limit when scripts/fetch-repos.mjs runs.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Disable Jekyll
-        run: touch dist/.nojekyll
+      - name: Compute image tag
+        id: tag
+        run: echo "tag=v$(date -u +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - name: Build Docker image
+        # Runner is x86_64, same as the VPS — no cross-arch step needed.
+        run: |
+          docker build \
+            -t "$IMAGE_NAME:${{ steps.tag.outputs.tag }}" \
+            -t "$IMAGE_NAME:latest" \
+            .
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Ship image into k3s containerd
+        # Pipe save → gzip → ssh → gunzip → ctr import; no temp files on the server.
+        run: |
+          docker save "$IMAGE_NAME:${{ steps.tag.outputs.tag }}" "$IMAGE_NAME:latest" \
+            | gzip \
+            | ssh "$REMOTE_USER@$HOST" "gunzip | k3s ctr images import -"
+
+      - name: Apply manifests
+        run: |
+          sed "s/__TAG__/${{ steps.tag.outputs.tag }}/g" deploy/k8s.yaml \
+            | ssh "$REMOTE_USER@$HOST" "kubectl apply -f -"
+
+      - name: Wait for rollout
+        run: |
+          ssh "$REMOTE_USER@$HOST" \
+            "kubectl -n $NAMESPACE rollout status deploy/$DEPLOYMENT --timeout=180s"
