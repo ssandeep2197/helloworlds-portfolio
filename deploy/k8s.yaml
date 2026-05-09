@@ -94,3 +94,35 @@ spec:
                 name: portfolio-web
                 port:
                   number: 80
+---
+# Redirects portfolio.helloworlds.co.in → helloworlds.co.in (301).
+# Separate ingress because nginx.ingress redirect annotations apply
+# to the whole ingress, and we don't want to redirect the apex/www hosts.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portfolio-redirect-ingress
+  namespace: portfolio
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/permanent-redirect: https://helloworlds.co.in$request_uri
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - portfolio.helloworlds.co.in
+      secretName: portfolio-redirect-tls
+  rules:
+    - host: portfolio.helloworlds.co.in
+      http:
+        paths:
+          # Backend is required by the Ingress schema but never reached —
+          # the permanent-redirect annotation fires before routing to it.
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio-web
+                port:
+                  number: 80
