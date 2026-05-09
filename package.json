@@ -8,7 +8,8 @@
     "sync-repos": "node scripts/fetch-repos.mjs",
     "build": "node scripts/fetch-repos.mjs && tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
