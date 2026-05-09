@@ -4,7 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/helloworlds-portfolio/',
+  // Site is served from the root of helloworlds.co.in on the VPS.
+  // (Previously '/helloworlds-portfolio/' for GitHub Pages.)
+  base: '/',
   plugins: [
     react(),
     tailwindcss(),
