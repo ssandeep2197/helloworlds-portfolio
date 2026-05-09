@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# local deploy artifacts
+deploy/.tag
+
 .env
 .env.*
 !.env.example
