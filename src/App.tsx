@@ -25,7 +25,7 @@ function App() {
         <footer className="relative py-10 px-6 md:px-12 border-t border-edge">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs font-mono uppercase tracking-[0.25em] text-mute">
             <span>© {new Date().getFullYear()} Sandeep Singh</span>
-            <span>Built with React · Three.js · Netlify</span>
+            <span>Built with React · Three.js · k3s</span>
           </div>
         </footer>
       </main>
