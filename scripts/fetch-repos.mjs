@@ -36,6 +36,11 @@ async function fetchAllRepos(user) {
   return repos;
 }
 
+// Display titles for repos whose names don't title-case nicely.
+const TITLE_OVERRIDES = {
+  bulkemail: 'Bulk Email',
+};
+
 function categorize(repo) {
   const lang = (repo.language || '').toLowerCase();
   if (['typescript', 'javascript', 'jsx', 'tsx'].includes(lang)) return 'web';
@@ -50,9 +55,11 @@ function trim(repo) {
   return {
     id: repo.id,
     name: repo.name,
-    title: repo.name
-      .replace(/[-_]+/g, ' ')
-      .replace(/\b\w/g, (c) => c.toUpperCase()),
+    title:
+      TITLE_OVERRIDES[repo.name] ??
+      repo.name
+        .replace(/[-_]+/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase()),
     description: repo.description || '',
     repoUrl: repo.html_url,
     homepage: repo.homepage && /^https?:\/\//.test(repo.homepage) ? repo.homepage : null,
